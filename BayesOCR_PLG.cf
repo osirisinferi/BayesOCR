@@ -1,0 +1,79 @@
+#*************************************************************************
+# Bayes OCR Plugin, version 0.1
+#*************************************************************************
+# Copyright 2007 P.R.A. Group - D.I.E.E. - University of Cagliari (ITA)
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#*************************************************************************
+
+loadplugin BayesOCR_PLG BayesOCR_PLG.pm
+# Cerberus guarded the gate to Hades and ensured
+# that spirits of the dead could enter...
+# ImageSpam Cerberus guards the inboxes and ensures
+# that only legitimate images can enter,
+# spam images are detected and eated..
+
+# Rule: BayesOCR_check(thr)
+# Categorisation of text embedded in images with TextCategorisation techniques.
+# Require gocr, convert (imagemagick)
+
+
+body    BayesOCR_PLG10    eval:BayesOCR_check(0.10, 0.20)
+body    BayesOCR_PLG20    eval:BayesOCR_check(0.20, 0.30)
+body    BayesOCR_PLG30    eval:BayesOCR_check(0.30, 0.40)
+body    BayesOCR_PLG40    eval:BayesOCR_check(0.40, 0.50)
+body    BayesOCR_PLG50    eval:BayesOCR_check(0.50, 0.60)
+body    BayesOCR_PLG60    eval:BayesOCR_check(0.60, 0.70)
+body    BayesOCR_PLG70    eval:BayesOCR_check(0.70, 0.80)
+body    BayesOCR_PLG80    eval:BayesOCR_check(0.80, 0.90)
+body    BayesOCR_PLG90    eval:BayesOCR_check(0.90, 0.95)
+body    BayesOCR_PLG95    eval:BayesOCR_check(0.95, 0.99)
+body    BayesOCR_PLG99    eval:BayesOCR_check(0.99, 1.00)
+
+describe  BayesOCR_PLG10  Bayesian ImageSpam probability is 10% to  20%
+describe  BayesOCR_PLG20  Bayesian ImageSpam probability is 20% to  30%
+describe  BayesOCR_PLG30  Bayesian ImageSpam probability is 30% to  40%
+describe  BayesOCR_PLG40  Bayesian ImageSpam probability is 40% to  50%
+describe  BayesOCR_PLG50  Bayesian ImageSpam probability is 50% to  60%
+describe  BayesOCR_PLG60  Bayesian ImageSpam probability is 60% to  70%
+describe  BayesOCR_PLG70  Bayesian ImageSpam probability is 70% to  80%
+describe  BayesOCR_PLG80  Bayesian ImageSpam probability is 80% to  90%
+describe  BayesOCR_PLG90  Bayesian ImageSpam probability is 90% to  95%
+describe  BayesOCR_PLG95  Bayesian ImageSpam probability is 95% to  99%
+describe  BayesOCR_PLG99  Bayesian ImageSpam probability is 99% to 100%
+
+add_header all BayesOCR-OUT  _PLGBAYESOCROUT_
+
+priority BayesOCR_PLG10 1000
+priority BayesOCR_PLG20 1000
+priority BayesOCR_PLG30 1000
+priority BayesOCR_PLG40 1000
+priority BayesOCR_PLG50 1000
+priority BayesOCR_PLG60 1000
+priority BayesOCR_PLG70 1000
+priority BayesOCR_PLG80 1000
+priority BayesOCR_PLG90 1000
+priority BayesOCR_PLG95 1000
+priority BayesOCR_PLG99 1000
+
+score BayesOCR_PLG10 0.4
+score BayesOCR_PLG20 0.8
+score BayesOCR_PLG30 1.2
+score BayesOCR_PLG40 1.6
+score BayesOCR_PLG50 2.0
+score BayesOCR_PLG60 2.4
+score BayesOCR_PLG70 2.8
+score BayesOCR_PLG80 3.2
+score BayesOCR_PLG90 3.6
+score BayesOCR_PLG95 4.0
+score BayesOCR_PLG99 5.0
