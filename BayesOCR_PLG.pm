@@ -16,7 +16,7 @@
 # limitations under the License.
 #*************************************************************************
 
-package BayesOCR_PLG;
+package Mail::SpamAssassin::Plugin::BayesOCR_PLG;
 
 use strict;
 use Mail::SpamAssassin;

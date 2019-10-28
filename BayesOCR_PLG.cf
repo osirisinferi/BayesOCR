@@ -16,7 +16,7 @@
 # limitations under the License.
 #*************************************************************************
 
-loadplugin BayesOCR_PLG BayesOCR_PLG.pm
+loadplugin Mail::SpamAssassin::Plugin::BayesOCR_PLG
 # Cerberus guarded the gate to Hades and ensured
 # that spirits of the dead could enter...
 # ImageSpam Cerberus guards the inboxes and ensures
