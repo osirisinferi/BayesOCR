@@ -241,92 +241,92 @@ sub imageTextExtractionByOCR
     #  800x600 <= res < 1024x768  => OCR + zoom 2X
     #    res < 800x600  => OCR + zoom 4X
 
-    if ($imagelen > 1000)
-    {
-        dbg("PLG-BayesOCR:: imageTextExtractionByOCR:: Skip, image size = $imagelen");
-        return "";
-    }
+    #if ($imagelen > 1000)
+    #{
+    #    dbg("PLG-BayesOCR:: imageTextExtractionByOCR:: Skip, image size = $imagelen");
+    #    return "";
+    #}
 
     open (FILE, ">$tmpFile.raw") or return "";
     print FILE "$imagestream\n";
     close FILE;
 
-    my $convertOPT = "";
-    my $imageIdentifyTxt = "";
-    if($imagelen < 20 )
-    {
-        dbg("PLG-BayesOCR:: imageTextExtractionByOCR:: Enable zoom 4X");
-        $convertOPT = "-sample 400% -density 280";
-    }
-    else
-    {
-        dbg("PLG-BayesOCR:: imageTextExtractionByOCR:: Check image dim");
+    #my $convertOPT = "";
+    #my $imageIdentifyTxt = "";
+    #if($imagelen < 20 )
+    #{
+    #    dbg("PLG-BayesOCR:: imageTextExtractionByOCR:: Enable zoom 4X");
+    #    $convertOPT = "-sample 400% -density 280";
+    #}
+    #else
+    #{
+    #    dbg("PLG-BayesOCR:: imageTextExtractionByOCR:: Check image dim");
 
         # check WxH
-        open  EXEFH, "identify -quiet -ping $tmpFile.raw |";
-        $imageIdentifyTxt = join "", <EXEFH>;
-        close EXEFH;
+    #    open  EXEFH, "identify -quiet -ping $tmpFile.raw |";
+    #    $imageIdentifyTxt = join "", <EXEFH>;
+    #    close EXEFH;
 
-        if( $imageIdentifyTxt =~ s/\s(\d*)x(\d*)\s//i )
-        {
-            my $size1 = $1;
-            my $size2 = $2;
+    #    if( $imageIdentifyTxt =~ s/\s(\d*)x(\d*)\s//i )
+    #    {
+    #        my $size1 = $1;
+    #        my $size2 = $2;
 
-            if($size1 * $size2  > 1400*1050 && $size1 > 1280 && $size2  > 1024)
-            {
-                dbg("PLG-BayesOCR:: imageTextExtractionByOCR:: Skip, image dim = $size1 x $size2");
-                unlink "$tmpFile.raw";
-                return "";
-            }
+    #        if($size1 * $size2  > 1400*1050 && $size1 > 1280 && $size2  > 1024)
+    #        {
+    #            dbg("PLG-BayesOCR:: imageTextExtractionByOCR:: Skip, image dim = $size1 x $size2");
+    #            unlink "$tmpFile.raw";
+    #            return "";
+    #        }
 
-            if( $size1 * $size2  < 800*600)
-            {
-                dbg("PLG-BayesOCR:: imageTextExtractionByOCR:: Enable zoom 4X");
-                $convertOPT = "-sample 400% -density 280";
-            }
-            elsif( $size1 * $size2  < 1024*768)
-            {
-                dbg("PLG-BayesOCR:: imageTextExtractionByOCR:: Enable zoom 2X");
-                $convertOPT = "-sample 200% -density 280";
-            }
-        }
-    }
+    #        if( $size1 * $size2  < 800*600)
+    #        {
+    #            dbg("PLG-BayesOCR:: imageTextExtractionByOCR:: Enable zoom 4X");
+    #            $convertOPT = "-sample 400% -density 280";
+    #        }
+    #        elsif( $size1 * $size2  < 1024*768)
+    #        {
+    #            dbg("PLG-BayesOCR:: imageTextExtractionByOCR:: Enable zoom 2X");
+    #            $convertOPT = "-sample 200% -density 280";
+    #        }
+    #    }
+    #}
 
-    dbg("PLG-BayesOCR:: imageTextExtractionByOCR:: Convert & OCR");
+    dbg("PLG-BayesOCR:: imageTextExtractionByOCR:: OCR");
     # -append  :: concatenate image i layers
     # -flatten :: fuse layers
     # -density :: set dpi
 
-    my $exstatus = system("convert $tmpFile.raw -append -flatten $convertOPT $tmpFile.pnm");
-    if($exstatus != 0)
-    {
-        dbg("PLG-BayesOCR:: imageTextExtractionByOCR:: Convert ERROR!!");
-        open  EXEFH, "identify -verbose -strip $tmpFile.raw |";
-        $imageIdentifyTxt = join "", <EXEFH>;
-        close EXEFH;
+    #my $exstatus = system("convert $tmpFile.raw -append -flatten $convertOPT $tmpFile.pnm");
+    #if($exstatus != 0)
+    #{
+    #    dbg("PLG-BayesOCR:: imageTextExtractionByOCR:: Convert ERROR!!");
+    #    open  EXEFH, "identify -verbose -strip $tmpFile.raw |";
+    #    $imageIdentifyTxt = join "", <EXEFH>;
+    #    close EXEFH;
 
-        my $timenow = localtime time;
-        open (FILE, ">>$tmpDir/sa_bayesOCR.log");
+    #    my $timenow = localtime time;
+    #    open (FILE, ">>$tmpDir/sa_bayesOCR.log");
 
-        print FILE "\n#--------------------------------\n";
-        print FILE "  $timenow\n";
-        print FILE "  Convert processing error";
-        print FILE "\n#--------------------------------\n\n";
+    #    print FILE "\n#--------------------------------\n";
+    #    print FILE "  $timenow\n";
+    #    print FILE "  Convert processing error";
+    #    print FILE "\n#--------------------------------\n\n";
 
-        print FILE "Stream size (kb): $imagelen\n";
-        print FILE "Identify output: \n$imageIdentifyTxt\n";
-        close FILE;
+    #    print FILE "Stream size (kb): $imagelen\n";
+    #    print FILE "Identify output: \n$imageIdentifyTxt\n";
+    #    close FILE;
 
-        unlink "$tmpFile.raw";
-        return "";
-    }
+    #    unlink "$tmpFile.raw";
+    #    return "";
+    #}
 
-    open EXEFH, "gocr $tmpFile.pnm |";
+    open EXEFH, "tesseract $tmpFile.raw - -l nld+eng+enm |";
     my $textOut = join "", <EXEFH>;
     close EXEFH;
 
     unlink "$tmpFile.raw";
-    unlink "$tmpFile.pnm";
+    #unlink "$tmpFile.pnm";
 
     return $textOut;
 }
