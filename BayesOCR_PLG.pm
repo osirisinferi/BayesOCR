@@ -206,6 +206,7 @@ sub imageTextExtractionFromMSG
         my @img_parts =  $msg->find_parts($_);
         for (my $i=0; $i <= $#img_parts; $i++)
         {
+	    dbg("PLG-BayesOCR:: imageTextExtractionFromMSG:: an image was found, OCR-ing");
             my $imagestream = $img_parts[$i]->decode(1048000);  # ~ 1 MB
             $imgTextOcr = join $imgTextOcr,  imageTextExtractionByOCR($imagestream), "\n";
 
