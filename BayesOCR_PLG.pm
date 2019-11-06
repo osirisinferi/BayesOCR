@@ -194,7 +194,7 @@ sub imageTextExtractionFromMSG
 
     dbg("PLG-BayesOCR:: imageTextExtractionFromMSG:: Extract Images");
 
-    my @mimeStr = ("image/", "img/");
+    my @mimeStr = ("image/jpeg", "img/");
     my @tmpImgFile;
     my $num=0;
 
@@ -206,7 +206,6 @@ sub imageTextExtractionFromMSG
 	dbg("PLG-BayesOCR:: imageTextExtractionFromMSG:: running foreach loop for $_");
         my @img_parts =  $msg->find_parts(qr($_));
 	dbg("PLG-BayesOCR:: imageTextExtractionFromMSG:: found parts: $#img_parts");
-	dbg("PLG-BayesOCR:: imageTextExtractionFromMSG:: message: $msg->content_summary()");
         for (my $i=0; $i <= $#img_parts; $i++)
         {
 	    dbg("PLG-BayesOCR:: imageTextExtractionFromMSG:: an image was found, OCR-ing");
