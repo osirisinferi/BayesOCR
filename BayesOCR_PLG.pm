@@ -192,7 +192,7 @@ sub imageTextExtractionFromMSG
 {
     my $msg = $_[0];
 
-    dbg("PLG-BayesOCR:: imageTextExtractionFromMSG:: Extract & Convert Images");
+    dbg("PLG-BayesOCR:: imageTextExtractionFromMSG:: Extract Images");
 
     my @mimeStr = ("image/*", "img/*");
     my @tmpImgFile;
