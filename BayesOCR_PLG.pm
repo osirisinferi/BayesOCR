@@ -321,7 +321,7 @@ sub imageTextExtractionByOCR
     #    return "";
     #}
 
-    open EXEFH, "tesseract $tmpFile.raw - -l nld+eng+enm |";
+    open EXEFH, "tesseract $tmpFile.raw - -l nld+eng+enm 2>/dev/null |";
     my $textOut = join "", <EXEFH>;
     close EXEFH;
 
