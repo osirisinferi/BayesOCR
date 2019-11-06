@@ -165,8 +165,8 @@ sub imageTextClassifierOutEstimation
     #================================
     dbg("PLG-BayesOCR:: imageTextClassifierOutEstimation:: Compute score with trained NaiveBayes");
     my $pmsTMP = new Mail::SpamAssassin::PerMsgStatus($pms->{main}, $msgTmp);
-    my $nbSA = $pms->{main}->{bayes_scanner};
-    #my $nbSA = new Mail::SpamAssassin::Bayes ($pms->{main});
+    #my $nbSA = $pms->{main}->{bayes_scanner};
+    my $nbSA = new Mail::SpamAssassin::Bayes ($pms->{main});
 
     if( $nbSA->is_scan_available() == 0)
     {
