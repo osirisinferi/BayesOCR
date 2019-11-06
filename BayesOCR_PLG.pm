@@ -203,7 +203,7 @@ sub imageTextExtractionFromMSG
     foreach (@mimeStr)
     {
         # Search all attach with current MIME
-	dbg("PLG-BayesOCR:: imageTextExtractionFromMSG:: running foreach loop");
+	dbg("PLG-BayesOCR:: imageTextExtractionFromMSG:: running foreach loop for $_");
         my @img_parts =  $msg->find_parts($_);
 	dbg("PLG-BayesOCR:: imageTextExtractionFromMSG:: found parts: $#img_parts");
         for (my $i=0; $i <= $#img_parts; $i++)
